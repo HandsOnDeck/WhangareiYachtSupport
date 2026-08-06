@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #0a2540;
+  --navy-light: #1b365d;
+  --ocean: #2e86ab;
+  --ocean-light: #4da6c9;
+  --sand: #c4a962;
+  --sand-light: #d4bc82;
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-600: #64748b;
+  --gray-800: #1e293b;
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-ocean: var(--ocean);
+  --color-ocean-light: var(--ocean-light);
+  --color-sand: var(--sand);
+  --color-sand-light: var(--sand-light);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: var(--navy);
+  background: var(--white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+::selection {
+  background: var(--ocean);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ocean);
+  outline-offset: 2px;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.gradient-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 37, 64, 0.7) 0%,
+    rgba(10, 37, 64, 0.4) 50%,
+    rgba(10, 37, 64, 0.8) 100%
+  );
+}
