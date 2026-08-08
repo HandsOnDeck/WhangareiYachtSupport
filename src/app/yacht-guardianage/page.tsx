@@ -39,8 +39,6 @@ export default function GuardianagePage() {
       <Hero
         title="Yacht Guardianage"
         subtitle="Complete peace of mind while you're away from your vessel"
-        image={IMAGES.guardianage}
-        showCTA
         compact
       />
 

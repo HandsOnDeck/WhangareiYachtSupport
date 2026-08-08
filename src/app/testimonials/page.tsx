@@ -37,8 +37,6 @@ export default function TestimonialsPage() {
       <Hero
         title="Testimonials"
         subtitle="Trusted by yacht owners from around the world"
-        image={IMAGES.yacht}
-        showCTA={false}
         compact
       />
 

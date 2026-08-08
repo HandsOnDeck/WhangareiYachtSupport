@@ -19,8 +19,6 @@ export default function ContactPage() {
       <Hero
         title="Contact Us"
         subtitle="We'd love to hear about your vessel and how we can help"
-        image={IMAGES.marina}
-        showCTA={false}
         compact
       />
 

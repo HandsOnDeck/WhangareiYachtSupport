@@ -48,8 +48,6 @@ export default function AboutPage() {
       <Hero
         title="About Us"
         subtitle="Passionate about yachts, committed to your peace of mind"
-        image={IMAGES.coastal}
-        showCTA={false}
         compact
       />
 

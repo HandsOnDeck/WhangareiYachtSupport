@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Whangarei Yacht Support",
   tagline:
-    "Professional Yacht Guardianage & Project Management/Owner Representative in Northland, New Zealand.",
+    "Professional Yacht Guardianage & Project Management/Owner Representative.",
   description:
     "Premium yacht guardianage, project management, and luxury accommodation services for visiting and locally berthed vessels in Whangarei Marina and Northland, New Zealand.",
   url: "https://whangareiyachtsupport.co.nz",

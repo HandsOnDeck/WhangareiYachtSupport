@@ -10,10 +10,9 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-navy/95 backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-header-bg/95 backdrop-blur-md shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-8">
         <Link href="/" className="flex items-center gap-2 text-white">
-          <Anchor className="h-8 w-8 text-sand" />
           <div>
             <span className="font-serif text-lg font-bold leading-tight">
               Whangarei Yacht Support

@@ -32,8 +32,6 @@ export default function ProjectManagementPage() {
       <Hero
         title="Project Management"
         subtitle="Owner representative services for refits, maintenance, and upgrades"
-        image={IMAGES.project}
-        showCTA
         compact
       />
 

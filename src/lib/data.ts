@@ -202,16 +202,18 @@ export const GALLERY_IMAGES = {
     { url: "/images/gallery/projects/painting.jpg", title: "Painting" },
   ],
   accommodation: [
-    { url: "/images/gallery/accommodation/luxury-suite.jpg", title: "Luxury Suite" },
-    { url: "/images/gallery/accommodation/master-bedroom.jpg", title: "Master Bedroom" },
-    { url: "/images/gallery/accommodation/living-area.jpg", title: "Living Area" },
-    { url: "/images/gallery/accommodation/kitchen.jpg", title: "Kitchen" },
+    { url: "/images/gallery/accommodation/AptLiving.png", title: "Living Area" },
+    { url: "/images/gallery/accommodation/Aptbedroom.png", title: "Master Bedroom" },
+    { url: "/images/gallery/accommodation/AptBathroom.png", title: "Bathroom" },
+    { url: "/images/gallery/accommodation/Aptkitchen.png", title: "Kitchen" },
   ],
   marina: [
-    { url: "/images/gallery/marina/whangarei-marina.jpg", title: "Whangarei Marina" },
-    { url: "/images/gallery/marina/northland-coast.jpg", title: "Northland Coast" },
-    { url: "/images/gallery/marina/town-basin.jpg", title: "Town Basin" },
-    { url: "/images/gallery/marina/superyacht-berth.jpg", title: "Superyacht Berth" },
+    { url: "/images/gallery/marina/townbasin.png", title: "Town Basin Marina" },
+    { url: "/images/gallery/marina/okara.png", title: "Okara Marina" },
+    { url: "/images/gallery/marina/oceania", title: "Oceania Boatyard" },
+    { url: "/images/gallery/marina/norsand.jpg", title: "Norsand Boatyard" },
+	{ url: "/images/gallery/marina/riverside.jpg", title: "Riverside Drive Marina" },
+	{ url: "/images/gallery/marina/harbourside.jpg", title: "Harbourside Boatworks" },
   ],
 };
 
@@ -219,12 +221,12 @@ export const WHY_CHOOSE_US = [
   {
     title: "Local Expertise",
     description:
-      "Deep knowledge of Whangarei Marina, Northland weather patterns, and the local marine industry.",
+      "Deep knowledge of Whangarei Marina services, from haulout yards to the best contractors to use.",
   },
   {
     title: "Proven Track Record",
     description:
-      "Years of experience caring for superyachts, motor yachts, and sailing vessels from around the world.",
+      "Experience caring for yachts from around the world, going the extra mile to make sure the overall experience in Whangarei is a good one.",
   },
   {
     title: "Transparent Communication",
@@ -234,7 +236,7 @@ export const WHY_CHOOSE_US = [
   {
     title: "Trusted Contractor Network",
     description:
-      "Established relationships with Northland's best marine tradespeople, electricians, and specialists.",
+      "Established relationships with Northland's best marine tradespeople, electricians, mechanics and specialists.",
   },
 ];
 

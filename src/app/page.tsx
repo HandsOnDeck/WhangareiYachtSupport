@@ -16,7 +16,6 @@ export default function HomePage() {
       <Hero
         title={SITE.name}
         subtitle={SITE.tagline}
-        image={IMAGES.hero}
       />
 
       {/* Introduction */}
@@ -30,11 +29,10 @@ export default function HomePage() {
                 centered={false}
               />
               <p className="mt-6 text-gray-600 leading-relaxed">
-                Based at Whangarei Marina in the heart of Northland, Whangarei Yacht Support
+                Whangarei Yacht Support
                 provides comprehensive guardianage, project management, and owner representative
-                services for yacht owners from around the world. Whether you&apos;re cruising the
-                Pacific, undertaking a refit, or need reliable care while you&apos;re away, our
-                experienced team delivers peace of mind with meticulous attention to detail.
+                services for yacht owners from around the world. Whether undertaking a refit, managing repairs or need reliable care while away, we deliver
+				peace of mind with meticulous attention to detail.
               </p>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 From weekly inspections and storm preparation to full refit management and luxury

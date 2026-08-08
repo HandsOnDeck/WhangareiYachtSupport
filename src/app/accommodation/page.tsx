@@ -29,8 +29,6 @@ export default function AccommodationPage() {
       <Hero
         title="Totara Apartment"
         subtitle="Luxury accommodation steps from Whangarei Marina"
-        image={IMAGES.accommodation}
-        showCTA={false}
         compact
       />
 

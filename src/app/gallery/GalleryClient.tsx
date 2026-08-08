@@ -12,7 +12,7 @@ const CATEGORIES = [
   { key: "guardianage" as const, label: "Guardianage" },
   { key: "projects" as const, label: "Projects" },
   { key: "accommodation" as const, label: "Accommodation" },
-  { key: "marina" as const, label: "Marina & Coast" },
+  { key: "marina" as const, label: "Marinas & Boatyards" },
 ];
 
 type CategoryKey = keyof typeof GALLERY_IMAGES;
@@ -24,9 +24,7 @@ export function GalleryClient() {
     <>
       <Hero
         title="Gallery"
-        subtitle="A glimpse into our work across guardianage, projects, and accommodation"
-        image={IMAGES.marina}
-        showCTA={false}
+        subtitle="A glimpse into our work"
         compact
       />
 
