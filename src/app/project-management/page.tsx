@@ -45,8 +45,8 @@ export default function ProjectManagementPage() {
             <p className="mt-6 text-gray-600 leading-relaxed">
               Whether you&apos;re undertaking a major refit, scheduled maintenance, or emergency
               repairs, our project management team acts as your trusted owner representative. We
-              coordinate vetted local contractors, manage budgets, provide regular progress updates
-              with photo documentation, and ensure work meets the highest standards.
+              coordinate local contractors, manage budgets, provide regular progress updates
+              with photo documentation, and ensure work meets the highest standards.We can arrange suppliers meet with you on arrival and are secured early to avoid delays on arrival.
             </p>
           </div>
 

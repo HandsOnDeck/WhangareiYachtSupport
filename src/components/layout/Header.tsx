@@ -10,9 +10,9 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-header-bg/95 backdrop-blur-md shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-navy/10 bg-header-bg/95 backdrop-blur-md shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 text-white">
+        <Link href="/" className="flex items-center gap-2 text-navy">
           <div>
             <span className="font-serif text-lg font-bold leading-tight">
               Whangarei Yacht Support
@@ -25,7 +25,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-white/80 transition-colors hover:text-white"
+              className="text-sm font-medium text-navy/70 transition-colors hover:text-navy"
             >
               {link.label}
             </Link>
@@ -33,7 +33,7 @@ export function Header() {
         </nav>
 
         <button
-          className="text-white lg:hidden"
+          className="text-navy lg:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
@@ -47,12 +47,12 @@ export function Header() {
           mobileOpen ? "max-h-[500px]" : "max-h-0"
         )}
       >
-        <nav className="flex flex-col gap-1 border-t border-white/10 px-4 py-4">
+        <nav className="flex flex-col gap-1 border-t border-navy/10 px-4 py-4">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-md px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+              className="rounded-md px-4 py-3 text-navy/70 transition-colors hover:bg-navy/5 hover:text-navy"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}

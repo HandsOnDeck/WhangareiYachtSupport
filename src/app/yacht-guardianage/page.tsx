@@ -7,7 +7,6 @@ import { CTASection } from "@/components/sections/CTASection";
 import { GUARDIANAGE_SERVICES } from "@/lib/data";
 import { generateSEO, serviceSchema } from "@/lib/seo";
 import { IMAGES } from "@/lib/constants";
-import { CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = generateSEO({
   title: "Yacht Guardianage Whangarei",
@@ -17,11 +16,11 @@ export const metadata: Metadata = generateSEO({
   image: IMAGES.guardianage,
 });
 
-const INSPECTION_OPTIONS = [
-  "Monthly inspections",
-  "Fortnightly (two weekly) inspections",
-  "Weekly inspections",
-];
+// const INSPECTION_OPTIONS = [
+//   "Monthly inspections",
+//   "Fortnightly (two weekly) inspections",
+//   "Weekly inspections",
+// ];
 
 export default function GuardianagePage() {
   const schema = serviceSchema(
@@ -47,16 +46,16 @@ export default function GuardianagePage() {
           <div className="mx-auto max-w-3xl text-center">
             <SectionHeading
               title="Professional Vessel Care"
-              subtitle="Flexible inspection schedules tailored to your needs"
+              subtitle="Flexible inspection schedules tailored to your individual needs"
             />
             <p className="mt-6 text-gray-600 leading-relaxed">
               Our guardianage service provides comprehensive care for your yacht while you&apos;re
-              travelling, refitting elsewhere, or simply unable to visit regularly. Every inspection
+              travelling, or simply unable to visit regularly. Every inspection
               is documented with detailed reports and photo updates emailed directly to you.
             </p>
           </div>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          {/* <div className="mt-10 flex flex-wrap justify-center gap-4">
             {INSPECTION_OPTIONS.map((option) => (
               <span
                 key={option}
@@ -66,7 +65,7 @@ export default function GuardianagePage() {
                 {option}
               </span>
             ))}
-          </div>
+          </div> */}
 
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {GUARDIANAGE_SERVICES.map((service) => (

@@ -8,12 +8,14 @@ interface HeroProps {
   title: string;
   subtitle?: string;
   compact?: boolean;
+  showCTA?: boolean;
 }
 
 export function Hero({
   title,
   subtitle,
   compact = false,
+  showCTA = true,
 }: HeroProps) {
   return (
     <section className={`flex items-center bg-hero-bg ${compact ? "min-h-[10vh]" : "min-h-[22vh]"}`}>
@@ -44,16 +46,20 @@ export function Hero({
             )}
           </div>
 
-          <div
-            className="animate-fade-in-up flex justify-center md:justify-end"
-            style={{ animationDelay: "0.4s" }}
-          >
-            <Link href="/contact" className="w-full md:w-auto">
-              <Button size="sm" className="w-full min-w-[9.5rem] md:w-auto">
-                Contact Us
-              </Button>
-            </Link>
-          </div>
+          {showCTA ? (
+            <div
+              className="animate-fade-in-up flex justify-center md:justify-end"
+              style={{ animationDelay: "0.4s" }}
+            >
+              <Link href="/contact" className="w-full md:w-auto">
+                <Button size="sm" className="w-full min-w-[9.5rem] md:w-auto">
+                  Contact Us
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="hidden md:block md:w-24" aria-hidden="true" />
+          )}
         </div>
       </div>
     </section>

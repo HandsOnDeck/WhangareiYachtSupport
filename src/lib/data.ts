@@ -53,13 +53,13 @@ export const GUARDIANAGE_SERVICES = [
   {
     title: "Flexible Inspection Schedule",
     description:
-      "Monthly, fortnightly (two weekly), or weekly inspections tailored to your vessel, location, and peace-of-mind requirements.",
+      "Monthly, fortnightly (two weekly), or weekly inspections tailored to your vessel, insurance, and peace-of-mind requirements.",
     icon: "Calendar",
   },
   {
     title: "Storm Preparation",
     description:
-      "Proactive storm securing, additional mooring lines, fender adjustment, and post-storm damage assessment.",
+      "Proactive storm securing, additional mooring lines, fender adjustment, post-storm damage assessment and visit/clearing of debris.",
     icon: "CloudRain",
   },
   {
@@ -71,17 +71,17 @@ export const GUARDIANAGE_SERVICES = [
   {
     title: "Bilge Monitoring",
     description:
-      "Regular bilge level checks and pump testing to detect any water ingress early.",
+      "Regular bilge level checks, clearing and pump testing to detect any water ingress early.",
     icon: "Droplets",
   },
   {
     title: "Battery Management",
     description:
-      "Battery voltage monitoring, charging maintenance, and load testing to prevent flat batteries.",
+      "Battery voltage monitoring to prevent flat batteries.",
     icon: "Battery",
   },
   {
-    title: "Engine Start-ups",
+    title: "Engine/Generator Start-ups",
     description:
       "Regular engine runs to maintain lubrication, charge batteries, and identify potential issues.",
     icon: "Cog",
@@ -95,19 +95,19 @@ export const GUARDIANAGE_SERVICES = [
   {
     title: "Cleaning Coordination",
     description:
-      "Scheduling and supervising exterior washes, interior cleans, and teak maintenance.",
+      "Scheduling and supervising exterior washes, interior cleans, and wiping services to avoid mould.",
     icon: "Sparkles",
   },
   {
-    title: "Security Checks",
+    title: "General Checks",
     description:
-      "Lock verification, alarm system checks, and general security patrols of the marina area.",
+      "Including bird nesting, loose halyards, leaks, checking cover protection, walking decks to check for anything unusual and anything else appropriate to specific needs.",
     icon: "Shield",
   },
   {
     title: "Inspection Reports",
     description:
-      "Detailed written reports with photos emailed directly to owners after every visit.",
+      "Detailed electronic reports with photos emailed directly to owners after every visit.",
     icon: "FileText",
   },
 ];
@@ -115,7 +115,7 @@ export const GUARDIANAGE_SERVICES = [
 export const PROJECT_SERVICES = [
   {
     title: "Refit Management",
-    description: "End-to-end management of major refits and upgrades.",
+    description: "End-to-end management of refits and upgrades.",
     icon: "Wrench",
   },
   {
@@ -125,12 +125,12 @@ export const PROJECT_SERVICES = [
   },
   {
     title: "Contractor Coordination",
-    description: "Vetted local contractors managed on your behalf.",
+    description: "Local contractors managed on your behalf.",
     icon: "Users",
   },
   {
     title: "Marine Electricians",
-    description: "Electrical systems, navigation, and AV installations.",
+    description: "Electrical systems, navigation, and lighting installations.",
     icon: "Zap",
   },
   {
@@ -147,6 +147,16 @@ export const PROJECT_SERVICES = [
     title: "Painters",
     description: "Antifouling, topside, and interior painting.",
     icon: "Paintbrush",
+  },
+  {
+    title: "Cabinetmakers",
+    description: "Galley/heads upgrades, woodwork repair or other bespoke projects.",
+    icon: "Hammer",
+  },
+    {
+    title: "Sails, Upholstery and Canvas Work",
+    description: "Repair, clean or new sails, upgrade shadecover, sailbag, dinghy chaps, new carpet or update cushions.",
+    icon: "Yacht",
   },
   {
     title: "Survey Coordination",
@@ -176,13 +186,12 @@ export const PROJECT_SERVICES = [
 ];
 
 export const ACCOMMODATION_AMENITIES = [
-  "Fully furnished apartments",
-  "Marina views",
+  "Fully furnished apartment",
   "High-speed WiFi",
   "Fully equipped kitchens",
   "Laundry facilities",
   "Secure parking",
-  "Walking distance to marina",
+  "Quiet location",
   "Town Basin restaurants & cafes",
   "Air conditioning & heating",
   "Weekly housekeeping available",
@@ -221,7 +230,7 @@ export const WHY_CHOOSE_US = [
   {
     title: "Local Expertise",
     description:
-      "Deep knowledge of Whangarei Marina services, from haulout yards to the best contractors to use.",
+      "Deep knowledge of Whangarei Marina services, from haulout yards to the best contractors to use. We can introduce you to the best suppliers, so you can communicate with them directly, or we’re happy to be the main point of contact with them – whatever suits you.",
   },
   {
     title: "Proven Track Record",

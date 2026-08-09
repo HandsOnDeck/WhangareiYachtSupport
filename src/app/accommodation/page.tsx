@@ -38,21 +38,23 @@ export default function AccommodationPage() {
             <div>
               <SectionHeading
                 title="Your Home Away from the Boat"
-                subtitle="Premium comfort in the heart of the Town Basin"
+                subtitle="Premium comfort cloe to the town centre. Perfect for yacht owners while your vessel is on the hard, visiting family and friends, 
+				or simply enjoying time off the boat while exploring Northland."
                 centered={false}
               />
               <p className="mt-6 text-gray-600 leading-relaxed">
-                Totara Apartment offers beautifully appointed, fully furnished accommodation with
-                stunning marina views. Perfect for yacht owners while your vessel is on the hard,
-                visiting family and friends, or simply enjoying time off the boat while exploring
-                Northland.
+                Totara Apartment offers a stylish and fully self-contained one-bedroom retreat designed for comfort and convenience.  
+				With a modern kitchen, luxurious new bathroom, and in-unit washing machine, you’ll have everything you need for a relaxed stay.
               </p>
+			  <p>
+			    The apartment includes a kitchen (with fridge/freezer), sitting room with bed settee, separate large bedroom and large bathroom with luxurious shower.
+			  </p>
               <ul className="mt-6 space-y-3">
                 {[
                   "Yacht owners while boat is on hard",
                   "Visiting family and guests",
                   "Time off the boat between passages",
-                  "Crew accommodation during refits",
+                  "Accommodation during refits",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3 text-gray-700">
                     <Check className="h-5 w-5 shrink-0 text-ocean" />

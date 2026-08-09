@@ -44,7 +44,7 @@ export default function TestimonialsPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <SectionHeading
             title="Client Reviews"
-            subtitle="Real feedback from vessel owners we've had the privilege to serve"
+            subtitle="Don't just take our word for it."
           />
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.map((t) => (

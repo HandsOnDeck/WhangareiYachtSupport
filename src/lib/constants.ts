@@ -4,9 +4,9 @@ export const SITE = {
     "Professional Yacht Guardianage & Project Management/Owner Representative.",
   description:
     "Premium yacht guardianage, project management, and luxury accommodation services for visiting and locally berthed vessels in Whangarei Marina and Northland, New Zealand.",
-  url: "https://whangareiyachtsupport.co.nz",
-  email: "info@whangareiyachtsupport.co.nz",
-  phone: "+64 9 438 3120",
+  url: "http://wys.co.nz",
+  email: "info@wys.co.nz",
+  phone: "+64 27 448 8802",
   address: "Whangarei Marina, Town Basin, Whangarei 0110, New Zealand",
   gstNumber: "123-456-789",
   bankName: "ANZ Bank New Zealand",
@@ -17,9 +17,9 @@ export const SITE = {
     sunday: "Sunday: Emergency calls only",
   },
   social: {
-    facebook: "https://facebook.com/whangareiyachtsupport",
-    instagram: "https://instagram.com/whangareiyachtsupport",
-    linkedin: "https://linkedin.com/company/whangareiyachtsupport",
+    facebook: "https://www.facebook.com/profile.php?id=61577282438677",
+    instagram: "https://instagram.com/wysnewzealand",
+    linkedin: "https://www.linkedin.com/in/whangarei-yacht-support-wys-957a29374/",
   },
 } as const;
 
