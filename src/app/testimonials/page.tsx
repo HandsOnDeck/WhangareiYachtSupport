@@ -21,7 +21,7 @@ export default function TestimonialsPage() {
     name: "Whangarei Yacht Support",
     review: TESTIMONIALS.map((t) => ({
       "@type": "Review",
-      author: { "@type": "Person", name: t.name },
+      author: { "@type": "Person", name: t.yachtName },
       reviewRating: { "@type": "Rating", ratingValue: t.rating, bestRating: 5 },
       reviewBody: t.content,
     })),
@@ -48,7 +48,7 @@ export default function TestimonialsPage() {
           />
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {TESTIMONIALS.map((t) => (
-              <TestimonialCard key={t.name} {...t} />
+              <TestimonialCard key={t.yachtName} {...t} />
             ))}
           </div>
         </div>

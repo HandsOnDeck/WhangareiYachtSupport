@@ -48,7 +48,6 @@ export async function POST(request: NextRequest) {
       subject: `New ${formType} Enquiry from ${data.name}`,
       html: `
         <h2>New Enquiry</h2>
-        <p><strong>Name:</strong> ${data.name}</p>
         <p><strong>Email:</strong> ${data.email}</p>
         <p><strong>Phone:</strong> ${data.phone || "N/A"}</p>
         <p><strong>Yacht:</strong> ${data.yachtName || "N/A"}</p>

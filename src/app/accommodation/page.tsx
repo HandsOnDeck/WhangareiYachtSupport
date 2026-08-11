@@ -38,7 +38,7 @@ export default function AccommodationPage() {
             <div>
               <SectionHeading
                 title="Your Home Away from the Boat"
-                subtitle="Premium comfort cloe to the town centre. Perfect for yacht owners while your vessel is on the hard, visiting family and friends, 
+                subtitle="Premium comfort close to the town centre. Perfect for yacht owners while your vessel is on the hard, visiting family and friends, 
 				or simply enjoying time off the boat while exploring Northland."
                 centered={false}
               />

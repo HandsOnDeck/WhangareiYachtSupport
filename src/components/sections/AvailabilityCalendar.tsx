@@ -36,10 +36,10 @@ export function AvailabilityCalendar() {
   const startPadding = monthStart.getDay();
 
   function isBooked(date: Date): boolean {
+    const day = startOfDay(date);
     return bookings.some((b) => {
       const checkIn = startOfDay(new Date(b.checkIn));
       const checkOut = startOfDay(new Date(b.checkOut));
-      const day = startOfDay(date);
       return day >= checkIn && day < checkOut;
     });
   }

@@ -68,7 +68,7 @@ export function Footer() {
   return (
     <footer className="bg-navy text-white">
       <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <div className="mb-4 flex items-center gap-2">
               <Anchor className="h-6 w-6 text-sand" />
@@ -91,16 +91,6 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-white/70">
               <li>{SITE.phone}</li>
               <li><a href={`mailto:${SITE.email}`} className="hover:text-white">{SITE.email}</a></li>
-              <li>{SITE.address}</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-4 font-serif text-lg font-semibold">Hours</h3>
-            <ul className="space-y-2 text-sm text-white/70">
-              <li>{SITE.hours.weekdays}</li>
-              <li>{SITE.hours.saturday}</li>
-              <li>{SITE.hours.sunday}</li>
             </ul>
           </div>
         </div>

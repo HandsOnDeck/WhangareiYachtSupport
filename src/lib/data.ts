@@ -1,51 +1,24 @@
 export const TESTIMONIALS = [
   {
-    name: "James Harrington",
-    yachtName: "MV Serenity",
-    country: "United Kingdom",
+    yachtName: "SV Thetis",
+    country: "Germany",
     rating: 5,
     content:
-      "Whangarei Yacht Support provided exceptional guardianage while we travelled inland. Weekly reports with photos gave us complete peace of mind. Their attention to detail is unmatched.",
+      "Very recommendable - our boat is on a jetty in Whangarei for the NZ winter and WYS has been looking after her for the last few months.   Helen checks on everything aboard, gets active when necessary and keeps us informed.   We are also happy with her proactive attitude when high winds or heavy rain are expected.   Her monthly reports are to the point and communication is as east and prompt as you could wish. We would never have left our boat alone for so long if we didn't know it was in good and reliable hands.   It surely is!",
   },
   {
-    name: "Sophie Laurent",
-    yachtName: "La Belle Étoile",
-    country: "France",
+    yachtName: "SV Ohana",
+    country: "United States",
     rating: 5,
     content:
-      "Our refit project was managed flawlessly from start to finish. The team coordinated contractors, kept us updated with progress photos, and delivered on time and within budget.",
+      "....Helen was beyond incredible. I initially talked to her and was impressed. She is a former cruiser and current boat owner so I knew she would understand my issues. Once in the thick of things she was very detail oriented and kept the work on pace. Now keep in mind we had over 70 jobs she was trying to get done on my boat. The only way to stay on pace was with good communication and she was very good at communicating.  We were so happy that we are coming back to NZ next year and will have Helen in charge of our boat again."
   },
   {
-    name: "Michael Chen",
-    yachtName: "Pacific Dream",
-    country: "Australia",
+    yachtName: "SV Ruffian",
+    country: "Great Britain",
     rating: 5,
     content:
-      "Professional, reliable, and genuinely passionate about yacht care. The crew accommodation was excellent and the marina location is perfect for exploring Northland.",
-  },
-  {
-    name: "Elena Rodriguez",
-    yachtName: "Caribbean Wind",
-    country: "Spain",
-    rating: 5,
-    content:
-      "Storm preparation service saved us during cyclone season. They secured our vessel, monitored bilge levels, and kept us informed throughout. Highly recommended.",
-  },
-  {
-    name: "David Thompson",
-    yachtName: "Southern Cross",
-    country: "New Zealand",
-    rating: 5,
-    content:
-      "As a local owner, I rely on WYS for all maintenance coordination. Their local knowledge and contractor network make project management effortless.",
-  },
-  {
-    name: "Anna Kowalski",
-    yachtName: "Baltic Star",
-    country: "Poland",
-    rating: 5,
-    content:
-      "Detailed reports with photo updates emailed directly to owners — keeping you informed wherever you are in the world.",
+      "WYS were instrumental in helping us following our dismasting en-route to NZ from Tonga. We would highly recommend WYS for all your shoreside needs, boat guardianage and project management requirements",
   },
 ];
 

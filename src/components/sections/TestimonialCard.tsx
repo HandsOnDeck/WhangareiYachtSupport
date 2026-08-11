@@ -1,7 +1,6 @@
 import { Star } from "lucide-react";
 
 interface TestimonialCardProps {
-  name: string;
   yachtName: string;
   country: string;
   rating: number;
@@ -9,7 +8,6 @@ interface TestimonialCardProps {
 }
 
 export function TestimonialCard({
-  name,
   yachtName,
   country,
   rating,
@@ -26,10 +24,8 @@ export function TestimonialCard({
         &ldquo;{content}&rdquo;
       </blockquote>
       <div>
-        <p className="font-semibold text-navy">{name}</p>
-        <p className="text-sm text-gray-500">
-          {yachtName} &middot; {country}
-        </p>
+        <p className="font-semibold text-navy">{yachtName}</p>
+        <p className="text-sm text-gray-500">{country}</p>
       </div>
     </div>
   );

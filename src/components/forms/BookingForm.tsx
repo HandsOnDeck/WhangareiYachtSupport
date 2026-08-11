@@ -19,7 +19,7 @@ const schema = z
     guestType: z.string().min(1, "Please select guest type"),
     checkIn: z.string().min(1, "Check-in date required"),
     checkOut: z.string().min(1, "Check-out date required"),
-    guests: z.number().min(1).max(6),
+    guests: z.coerce.number().min(1, "At least 1 guest").max(4, "Maximum 4 guests"),
     notes: z.string().optional(),
     website: z.string().max(0).optional(),
   })
@@ -140,7 +140,7 @@ export function BookingForm() {
           type="number"
           min={1}
           max={6}
-          {...register("guests")}
+          {...register("guests", { valueAsNumber: true })}
           error={errors.guests?.message}
         />
       </div>

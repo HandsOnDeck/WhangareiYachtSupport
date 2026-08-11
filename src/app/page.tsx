@@ -136,7 +136,7 @@ export default function HomePage() {
           />
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             {TESTIMONIALS.slice(0, 3).map((t) => (
-              <TestimonialCard key={t.name} {...t} />
+              <TestimonialCard key={t.yachtName} {...t} />
             ))}
           </div>
           <div className="mt-10 text-center">
@@ -188,13 +188,6 @@ export default function HomePage() {
                     <p className="text-gray-600">{SITE.email}</p>
                   </div>
                 </a>
-                <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
-                  <MapPin className="mt-0.5 h-5 w-5 text-ocean" />
-                  <div>
-                    <p className="font-medium text-navy">Location</p>
-                    <p className="text-gray-600">{SITE.address}</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
