@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
-import { ContactForm } from "@/components/forms/ContactForm";
+import { ContactDetails } from "@/components/sections/ContactDetails";
 import { CTASection } from "@/components/sections/CTASection";
 import { PROJECT_SERVICES } from "@/lib/data";
 import { generateSEO, serviceSchema } from "@/lib/seo";
@@ -83,13 +83,13 @@ export default function ProjectManagementPage() {
       </section>
 
       <section className="bg-gray-50 py-20">
-        <div className="mx-auto max-w-3xl px-4 lg:px-8">
+        <div className="mx-auto max-w-xl px-4 lg:px-8">
           <SectionHeading
             title="Discuss Your Project"
-            subtitle="Share your refit or maintenance plans with our team"
+            subtitle="Call or email us to share your refit or maintenance plans"
           />
-          <div className="mt-8 rounded-xl border border-gray-100 bg-white p-8 shadow-sm">
-            <ContactForm defaultService="project" formType="PROJECT" />
+          <div className="mt-8">
+            <ContactDetails />
           </div>
         </div>
       </section>

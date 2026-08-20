@@ -3,8 +3,7 @@ import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { GalleryGrid } from "@/components/sections/GalleryGrid";
-import { BookingForm } from "@/components/forms/BookingForm";
-import { AvailabilityCalendar } from "@/components/sections/AvailabilityCalendar";
+import { ContactDetails } from "@/components/sections/ContactDetails";
 import { CTASection } from "@/components/sections/CTASection";
 import { ACCOMMODATION_AMENITIES, GALLERY_IMAGES } from "@/lib/data";
 import { generateSEO } from "@/lib/seo";
@@ -103,28 +102,13 @@ export default function AccommodationPage() {
       </section>
 
       <section className="bg-gray-50 py-20">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2">
-            <div>
-              <SectionHeading
-                title="Availability"
-                subtitle="Check dates and request a booking"
-                centered={false}
-              />
-              <div className="mt-8">
-                <AvailabilityCalendar />
-              </div>
-            </div>
-            <div>
-              <SectionHeading
-                title="Booking Enquiry"
-                subtitle="Reserve Totara Apartment for your stay"
-                centered={false}
-              />
-              <div className="mt-8 rounded-xl border border-gray-100 bg-white p-8 shadow-sm">
-                <BookingForm />
-              </div>
-            </div>
+        <div className="mx-auto max-w-xl px-4 lg:px-8">
+          <SectionHeading
+            title="Enquire About a Stay"
+            subtitle="Call or email us to check availability and reserve Totara Apartment"
+          />
+          <div className="mt-8">
+            <ContactDetails />
           </div>
         </div>
       </section>

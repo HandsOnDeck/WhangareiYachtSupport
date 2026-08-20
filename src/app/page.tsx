@@ -4,11 +4,11 @@ import { Hero } from "@/components/sections/Hero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { TestimonialCard } from "@/components/sections/TestimonialCard";
-import { ContactForm } from "@/components/forms/ContactForm";
+import { ContactDetails } from "@/components/sections/ContactDetails";
 import { CTASection } from "@/components/sections/CTASection";
 import { WHY_CHOOSE_US, TESTIMONIALS } from "@/lib/data";
 import { IMAGES, SITE } from "@/lib/constants";
-import { Shield, Wrench, Home, ArrowRight, Phone, Mail, MapPin } from "lucide-react";
+import { Shield, Wrench, Home, ArrowRight } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -151,44 +151,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Quick Enquiry + Contact */}
+      {/* Contact */}
       <section className="bg-gray-50 py-20">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2">
-            <div>
-              <SectionHeading
-                title="Quick Enquiry"
-                subtitle="Tell us about your vessel and we'll get back to you within 24 hours"
-                centered={false}
-              />
-              <div className="mt-8">
-                <ContactForm compact />
-              </div>
-            </div>
-            <div>
-              <SectionHeading title="Contact Information" centered={false} />
-              <div className="mt-8 space-y-6">
-                <a
-                  href={`tel:${SITE.phone.replace(/\s/g, "")}`}
-                  className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
-                >
-                  <Phone className="mt-0.5 h-5 w-5 text-ocean" />
-                  <div>
-                    <p className="font-medium text-navy">Phone / WhatsApp</p>
-                    <p className="text-gray-600">{SITE.phone}</p>
-                  </div>
-                </a>
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
-                >
-                  <Mail className="mt-0.5 h-5 w-5 text-ocean" />
-                  <div>
-                    <p className="font-medium text-navy">Email</p>
-                    <p className="text-gray-600">{SITE.email}</p>
-                  </div>
-                </a>
-              </div>
+          <div className="mx-auto max-w-xl">
+            <SectionHeading
+              title="Get in Touch"
+              subtitle="Call or email us to discuss your vessel"
+            />
+            <div className="mt-8">
+              <ContactDetails />
             </div>
           </div>
         </div>

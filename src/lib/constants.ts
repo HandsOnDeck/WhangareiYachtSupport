@@ -23,12 +23,6 @@ export const SITE = {
   },
 } as const;
 
-/** Set to false once email/forms are live in production. */
-export const FORMS_UNDER_CONSTRUCTION = true;
-
-export const FORMS_UNDER_CONSTRUCTION_MESSAGE =
-  "Sorry, this feature is under construction. Please contact us by phone or email in the meantime.";
-
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/yacht-guardianage", label: "Guardianage" },
@@ -50,8 +44,6 @@ export const SEO_KEYWORDS = [
   "Whangarei Marina Services",
   "Accommodation Whangarei",
 ] as const;
-
-export const GST_RATE = 0.15;
 
 export const IMAGES = {
   hero: "/images/marina/townbasin.jpg",
