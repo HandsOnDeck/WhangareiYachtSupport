@@ -1,21 +1,38 @@
 import nodemailer from "nodemailer";
 import { SITE } from "./constants";
 
+const smtpPort = parseInt(process.env.SMTP_PORT || "587");
+
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "smtp.sendgrid.net",
-  port: parseInt(process.env.SMTP_PORT || "587"),
-  secure: false,
+  host: process.env.SMTP_HOST,
+  port: smtpPort,
+  secure: smtpPort === 465,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
   },
+  // Fail fast rather than making the visitor wait on an unreachable mail server.
+  connectionTimeout: 8000,
+  greetingTimeout: 8000,
+  socketTimeout: 12000,
 });
 
 interface SendEmailOptions {
   to: string;
   subject: string;
   html: string;
+  replyTo?: string;
   attachments?: { filename: string; content: Buffer }[];
+}
+
+function htmlToText(html: string): string {
+  return html
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(p|h1|h2|h3|li|div)>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 export async function sendEmail(options: SendEmailOptions) {
@@ -25,8 +42,10 @@ export async function sendEmail(options: SendEmailOptions) {
     await transporter.sendMail({
       from,
       to: options.to,
+      replyTo: options.replyTo,
       subject: options.subject,
       html: options.html,
+      text: htmlToText(options.html),
       attachments: options.attachments,
     });
     return { success: true };

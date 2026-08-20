@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
+import { UnderConstructionNotice } from "@/components/ui/UnderConstructionNotice";
 import { Send, CheckCircle } from "lucide-react";
+import { FORMS_UNDER_CONSTRUCTION } from "@/lib/constants";
 
 const schema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -45,8 +47,13 @@ export function ContactForm({
     defaultValues: { service: defaultService },
   });
 
+  if (FORMS_UNDER_CONSTRUCTION) {
+    return <UnderConstructionNotice />;
+  }
+
   async function onSubmit(data: FormData) {
     setError("");
+
     try {
       const res = await fetch("/api/contact", {
         method: "POST",

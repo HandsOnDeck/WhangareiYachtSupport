@@ -9,7 +9,9 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
+import { UnderConstructionNotice } from "@/components/ui/UnderConstructionNotice";
 import { Calendar, CheckCircle } from "lucide-react";
+import { FORMS_UNDER_CONSTRUCTION } from "@/lib/constants";
 
 const schema = z
   .object({
@@ -43,8 +45,13 @@ export function BookingForm() {
     defaultValues: { guests: 2, guestType: "yacht-owner" },
   });
 
+  if (FORMS_UNDER_CONSTRUCTION) {
+    return <UnderConstructionNotice />;
+  }
+
   async function onSubmit(data: FormData) {
     setError("");
+
     try {
       const res = await fetch("/api/bookings", {
         method: "POST",

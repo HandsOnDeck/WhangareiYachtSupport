@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 interface Booking {
   checkIn: string;
   checkOut: string;
+  status: "PENDING" | "CONFIRMED";
 }
 
 export function AvailabilityCalendar() {
@@ -35,13 +36,15 @@ export function AvailabilityCalendar() {
   const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
   const startPadding = monthStart.getDay();
 
-  function isBooked(date: Date): boolean {
+  function getBookingForDay(date: Date): Booking | undefined {
     const day = startOfDay(date);
-    return bookings.some((b) => {
+    const matching = bookings.filter((b) => {
       const checkIn = startOfDay(new Date(b.checkIn));
       const checkOut = startOfDay(new Date(b.checkOut));
       return day >= checkIn && day < checkOut;
     });
+
+    return matching.find((b) => b.status === "CONFIRMED") ?? matching[0];
   }
 
   return (
@@ -81,8 +84,10 @@ export function AvailabilityCalendar() {
           <div key={`pad-${i}`} />
         ))}
         {days.map((day) => {
-          const booked = isBooked(day);
+          const booking = getBookingForDay(day);
           const past = isBefore(day, startOfDay(new Date()));
+          const pending = booking?.status === "PENDING";
+          const confirmed = booking?.status === "CONFIRMED";
           return (
             <div
               key={day.toISOString()}
@@ -90,11 +95,14 @@ export function AvailabilityCalendar() {
                 "flex aspect-square items-center justify-center rounded-md text-sm",
                 !isSameMonth(day, currentMonth) && "text-gray-300",
                 isToday(day) && "ring-2 ring-ocean",
-                booked && "bg-red-100 text-red-700",
-                !booked && !past && "bg-green-50 text-green-700",
+                pending && "bg-yellow-100 text-yellow-800",
+                confirmed && "bg-red-100 text-red-700",
+                !booking && !past && "bg-green-50 text-green-700",
                 past && "text-gray-300"
               )}
-              aria-label={`${format(day, "d MMMM")}${booked ? ", booked" : ", available"}`}
+              aria-label={`${format(day, "d MMMM")}${
+                pending ? ", pending" : confirmed ? ", booked" : ", available"
+              }`}
             >
               {format(day, "d")}
             </div>
@@ -102,10 +110,14 @@ export function AvailabilityCalendar() {
         })}
       </div>
 
-      <div className="mt-4 flex gap-4 text-xs text-gray-500">
+      <div className="mt-4 flex flex-wrap gap-4 text-xs text-gray-500">
         <span className="flex items-center gap-1">
           <span className="inline-block h-3 w-3 rounded bg-green-50 ring-1 ring-green-200" />
           Available
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block h-3 w-3 rounded bg-yellow-100 ring-1 ring-yellow-300" />
+          Pending
         </span>
         <span className="flex items-center gap-1">
           <span className="inline-block h-3 w-3 rounded bg-red-100 ring-1 ring-red-200" />

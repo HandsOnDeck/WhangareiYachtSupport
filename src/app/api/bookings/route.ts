@@ -55,10 +55,12 @@ export async function POST(request: NextRequest) {
     const checkInFormatted = format(new Date(data.checkIn), "d MMMM yyyy");
     const checkOutFormatted = format(new Date(data.checkOut), "d MMMM yyyy");
 
-    await sendEmail({
-      to: SITE.email,
-      subject: `New Accommodation Booking — ${data.guestName}`,
-      html: `
+    await Promise.allSettled([
+      sendEmail({
+        to: SITE.email,
+        replyTo: data.guestEmail,
+        subject: `New Accommodation Booking — ${data.guestName}`,
+        html: `
         <h2>New Booking Request — Totara Apartment</h2>
         <p><strong>Guest:</strong> ${data.guestName}</p>
         <p><strong>Email:</strong> ${data.guestEmail}</p>
@@ -69,13 +71,13 @@ export async function POST(request: NextRequest) {
         <p><strong>Guests:</strong> ${data.guests}</p>
         <p><strong>Notes:</strong> ${data.notes || "None"}</p>
       `,
-    });
-
-    await sendEmail({
-      to: data.guestEmail,
-      subject: `Booking Request Received — Totara Apartment`,
-      html: bookingConfirmationTemplate(data.guestName, checkInFormatted, checkOutFormatted),
-    });
+      }),
+      sendEmail({
+        to: data.guestEmail,
+        subject: `Booking Request Received — Totara Apartment`,
+        html: bookingConfirmationTemplate(data.guestName, checkInFormatted, checkOutFormatted),
+      }),
+    ]);
 
     await createAuditLog({
       action: "BOOKING_CREATE",
@@ -98,7 +100,7 @@ export async function GET() {
   try {
     const bookings = await prisma.accommodationBooking.findMany({
       where: { status: { in: ["PENDING", "CONFIRMED"] } },
-      select: { checkIn: true, checkOut: true },
+      select: { checkIn: true, checkOut: true, status: true },
       orderBy: { checkIn: "asc" },
     });
 
@@ -106,6 +108,7 @@ export async function GET() {
       bookings: bookings.map((b) => ({
         checkIn: b.checkIn.toISOString(),
         checkOut: b.checkOut.toISOString(),
+        status: b.status,
       })),
     });
   } catch {

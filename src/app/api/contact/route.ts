@@ -43,10 +43,12 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    await sendEmail({
-      to: SITE.email,
-      subject: `New ${formType} Enquiry from ${data.name}`,
-      html: `
+    await Promise.allSettled([
+      sendEmail({
+        to: SITE.email,
+        replyTo: data.email,
+        subject: `New ${formType} Enquiry from ${data.name}`,
+        html: `
         <h2>New Enquiry</h2>
         <p><strong>Email:</strong> ${data.email}</p>
         <p><strong>Phone:</strong> ${data.phone || "N/A"}</p>
@@ -55,13 +57,13 @@ export async function POST(request: NextRequest) {
         <p><strong>Message:</strong></p>
         <p>${data.message}</p>
       `,
-    });
-
-    await sendEmail({
-      to: data.email,
-      subject: `Thank you for contacting ${SITE.name}`,
-      html: formConfirmationTemplate(data.name, data.service),
-    });
+      }),
+      sendEmail({
+        to: data.email,
+        subject: `Thank you for contacting ${SITE.name}`,
+        html: formConfirmationTemplate(data.name, data.service),
+      }),
+    ]);
 
     await createAuditLog({
       action: "FORM_SUBMIT",
