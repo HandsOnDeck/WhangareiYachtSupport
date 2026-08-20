@@ -83,8 +83,8 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
               <Image
-                src={IMAGES.yacht}
-                alt="Yacht at Whangarei Marina"
+                src={IMAGES.tsg}
+                alt="Whangarei Yacht Support"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

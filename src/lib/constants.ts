@@ -35,7 +35,6 @@ export const NAV_LINKS = [
   { href: "/project-management", label: "Projects" },
   { href: "/accommodation", label: "Accommodation" },
   { href: "/about", label: "About" },
-  { href: "/gallery", label: "Gallery" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/contact", label: "Contact" },
 ] as const;
@@ -55,11 +54,11 @@ export const SEO_KEYWORDS = [
 export const GST_RATE = 0.15;
 
 export const IMAGES = {
-  hero: "/images/hero/hero.jpg",
-  marina: "/images/marina/marina.jpg",
-  yacht: "/images/about/yacht.jpg",
+  hero: "/images/marina/townbasin.jpg",
+  marina: "/images/marina/townbasin.jpg",
+  tsg: "/images/about/TSG.jpg",
   coastal: "/images/marina/coastal.jpg",
-  accommodation: "/images/accommodation/exterior.jpg",
+  accommodation: "/images/accommodation/apartment.jpg",
   project: "/images/project-management/refit.jpg",
   guardianage: "/images/guardianage/inspection.jpg",
 } as const;
