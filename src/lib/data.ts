@@ -184,10 +184,10 @@ export const GALLERY_IMAGES = {
     { url: "/images/gallery/projects/painting.jpg", title: "Painting" },
   ],
   accommodation: [
-    { url: "/images/gallery/accommodation/AptLiving.png", title: "Living Area" },
-    { url: "/images/gallery/accommodation/AptBedroom.png", title: "Master Bedroom" },
-    { url: "/images/gallery/accommodation/AptBathroom.png", title: "Bathroom" },
-    { url: "/images/gallery/accommodation/Aptkitchen.png", title: "Kitchen" },
+    { url: "/images/gallery/accommodation/AptLiving.jpg", title: "Living Area" },
+    { url: "/images/gallery/accommodation/AptBedroom.jpg", title: "Master Bedroom" },
+    { url: "/images/gallery/accommodation/AptBathroom.jpg", title: "Bathroom" },
+    { url: "/images/gallery/accommodation/AptKitchen.jpg", title: "Kitchen" },
   ],
   marina: [
     { url: "/images/gallery/marina/townbasin.png", title: "Town Basin Marina" },
