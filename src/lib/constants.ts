@@ -4,7 +4,7 @@ export const SITE = {
     "Professional Yacht Guardianage & Project Management/Owner Representative.",
   description:
     "Premium yacht guardianage, project management, and luxury accommodation services for visiting and locally berthed vessels in Whangarei Marina and Northland, New Zealand.",
-  url: "http://wys.co.nz",
+  url: "https://wys.co.nz",
   email: "info@wys.co.nz",
   phone: "+64 27 448 8802",
   address: "Whangarei Marina, Town Basin, Whangarei 0110, New Zealand",
