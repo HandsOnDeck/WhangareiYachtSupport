@@ -185,7 +185,7 @@ export const GALLERY_IMAGES = {
   ],
   accommodation: [
     { url: "/images/gallery/accommodation/AptLiving.png", title: "Living Area" },
-    { url: "/images/gallery/accommodation/Aptbedroom.png", title: "Master Bedroom" },
+    { url: "/images/gallery/accommodation/AptBedroom.png", title: "Master Bedroom" },
     { url: "/images/gallery/accommodation/AptBathroom.png", title: "Bathroom" },
     { url: "/images/gallery/accommodation/Aptkitchen.png", title: "Kitchen" },
   ],
