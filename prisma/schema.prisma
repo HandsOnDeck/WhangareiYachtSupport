@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model AccommodationBooking {
+  id         String        @id @default(cuid())
+  guestName  String
+  guestEmail String
+  guestPhone String?
+  guestType  String?
+  checkIn    DateTime
+  checkOut   DateTime
+  guests     Int           @default(1)
+  notes      String?       @db.Text
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@index([checkIn, checkOut])
+  @@index([status])
+}
