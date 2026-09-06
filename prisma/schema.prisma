@@ -7,27 +7,66 @@ datasource db {
   provider = "postgresql"
 }
 
-enum BookingStatus {
-  PENDING
-  CONFIRMED
-  CANCELLED
-  COMPLETED
+/// Client / yacht owner (shared with wys-admin)
+model Client {
+  clientId  Int     @id @default(autoincrement()) @map("CLIENTID")
+  status    String  @db.Char(1) @map("STATUS")
+  name      String  @db.VarChar(50) @map("NAME")
+  yachtName String? @db.VarChar(50) @map("YACHTNAME")
+  email     String  @db.VarChar(50) @map("EMAILD")
+  phone     String  @db.VarChar(20) @map("PHONE")
+  notes     String? @db.Text @map("NOTES")
+
+  jobs     Job[]
+  bookings Booking[]
+
+  @@map("CLIENT")
 }
 
-model AccommodationBooking {
-  id         String        @id @default(cuid())
-  guestName  String
-  guestEmail String
-  guestPhone String?
-  guestType  String?
-  checkIn    DateTime
-  checkOut   DateTime
-  guests     Int           @default(1)
-  notes      String?       @db.Text
-  status     BookingStatus @default(PENDING)
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+/// Lookup: job type codes
+model JobType {
+  jobType String @id @db.VarChar(10) @map("JOBTYPE")
+  descr   String @db.VarChar(50) @map("DESCR")
 
-  @@index([checkIn, checkOut])
+  jobs Job[]
+
+  @@map("JOBTYPE")
+}
+
+/// Work jobs against a client/yacht
+model Job {
+  jobId     Int       @id @default(autoincrement()) @map("JOBID")
+  clientId  Int       @map("CLIENTID")
+  jobType   String    @db.VarChar(10) @map("JOBTYPE")
+  status    String    @db.Char(1) @map("STATUS")
+  descr     String?   @db.VarChar(50) @map("DESCR")
+  notes     String?   @db.Text @map("NOTES")
+  startDate DateTime? @db.Date @map("STARTDATE")
+  endDate   DateTime? @db.Date @map("ENDDATE")
+  frequency String?   @default("ONEOFF") @db.VarChar(15) @map("FREQUENCY")
+
+  client Client  @relation(fields: [clientId], references: [clientId], onDelete: Restrict)
+  type   JobType @relation(fields: [jobType], references: [jobType], onDelete: Restrict)
+
+  @@index([clientId])
+  @@index([jobType])
   @@index([status])
+  @@map("JOB")
+}
+
+/// Totara apartment accommodation booking (shared with wys-admin)
+model Booking {
+  clientId  Int      @map("CLIENTID")
+  startDate DateTime @db.Date @map("STARTDATE")
+  endDate   DateTime @db.Date @map("ENDDATE")
+  status    String   @db.Char(1) @map("STATUS")
+  numGuests Int?     @map("NUMGUESTS")
+  notes     String?  @db.Text @map("NOTES")
+
+  client Client @relation(fields: [clientId], references: [clientId], onDelete: Restrict)
+
+  @@id([clientId, startDate, endDate])
+  @@index([status])
+  @@index([startDate, endDate])
+  @@map("BOOKING")
 }

@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { sendEmail, formConfirmationTemplate } from "@/lib/email";
+import {
+  createClientAndBookingFromContact,
+  createClientAndJobFromContact,
+  isAccommodationService,
+  serviceLabel,
+} from "@/lib/enquiry";
 import { SITE } from "@/lib/constants";
 
 const schema = z.object({
@@ -26,9 +32,9 @@ function escapeHtml(value: string): string {
 
 export async function POST(request: NextRequest) {
   try {
-    if (!process.env.RESEND_API_KEY) {
+    if (!process.env.DATABASE_URL) {
       return NextResponse.json(
-        { error: "Email service is not configured" },
+        { error: "Database is not configured" },
         { status: 503 }
       );
     }
@@ -40,22 +46,35 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
+    const accommodation = isAccommodationService(data.service, data.formType);
+    const result = accommodation
+      ? await createClientAndBookingFromContact(data)
+      : await createClientAndJobFromContact(data);
+
     const formType = data.formType || "CONTACT";
     const contactTo = process.env.CONTACT_TO || SITE.email;
     const safeName = escapeHtml(data.name);
     const safeEmail = escapeHtml(data.email);
     const safePhone = escapeHtml(data.phone || "N/A");
     const safeYacht = escapeHtml(data.yachtName || "N/A");
-    const safeService = escapeHtml(data.service);
+    const safeService = escapeHtml(serviceLabel(data.service));
     const safeMessage = escapeHtml(data.message).replace(/\n/g, "<br/>");
 
-    const [notification, confirmation] = await Promise.allSettled([
-      sendEmail({
-        to: contactTo,
-        replyTo: data.email,
-        subject: `New ${formType} Enquiry from ${data.name}`,
-        html: `
+    const recordLines = accommodation
+      ? `<p><strong>Client ID:</strong> ${result.client.clientId}</p>
+        <p><strong>Booking:</strong> dates TBD (enquiry)</p>`
+      : `<p><strong>Client ID:</strong> ${result.client.clientId}</p>
+        <p><strong>Job ID:</strong> ${"job" in result ? result.job.jobId : ""}</p>`;
+
+    if (process.env.RESEND_API_KEY) {
+      await Promise.allSettled([
+        sendEmail({
+          to: contactTo,
+          replyTo: data.email,
+          subject: `New ${formType} Enquiry from ${data.name}`,
+          html: `
         <h2>New Enquiry</h2>
+        ${recordLines}
         <p><strong>Name:</strong> ${safeName}</p>
         <p><strong>Email:</strong> ${safeEmail}</p>
         <p><strong>Phone:</strong> ${safePhone}</p>
@@ -64,26 +83,28 @@ export async function POST(request: NextRequest) {
         <p><strong>Message:</strong></p>
         <p>${safeMessage}</p>
       `,
-      }),
-      sendEmail({
-        to: data.email,
-        subject: `Thank you for contacting ${SITE.name}`,
-        html: formConfirmationTemplate(data.name, data.service),
-      }),
-    ]);
-
-    const notificationFailed =
-      notification.status === "rejected" ||
-      (notification.status === "fulfilled" && !notification.value.success);
-    const confirmationFailed =
-      confirmation.status === "rejected" ||
-      (confirmation.status === "fulfilled" && !confirmation.value.success);
-
-    if (notificationFailed && confirmationFailed) {
-      return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+        }),
+        sendEmail({
+          to: data.email,
+          subject: `Thank you for contacting ${SITE.name}`,
+          html: formConfirmationTemplate(data.name, serviceLabel(data.service)),
+        }),
+      ]);
     }
 
-    return NextResponse.json({ success: true });
+    if (accommodation && "booking" in result) {
+      return NextResponse.json({
+        success: true,
+        clientId: result.client.clientId,
+        booking: true,
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      clientId: result.client.clientId,
+      jobId: "job" in result ? result.job.jobId : undefined,
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid form data" }, { status: 400 });

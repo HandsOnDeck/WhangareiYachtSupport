@@ -15,8 +15,21 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+function getPrismaClient() {
+  const existing = globalForPrisma.prisma;
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  // Hot reload can keep an old client (pre-redesign) without `booking` / `client`.
+  if (
+    existing &&
+    typeof (existing as { booking?: unknown }).booking !== "undefined" &&
+    typeof (existing as { client?: unknown }).client !== "undefined"
+  ) {
+    return existing;
+  }
+
+  const client = createPrismaClient();
+  globalForPrisma.prisma = client;
+  return client;
 }
+
+export const prisma = getPrismaClient();

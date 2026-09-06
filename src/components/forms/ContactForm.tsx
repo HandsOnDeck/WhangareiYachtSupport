@@ -29,7 +29,7 @@ interface ContactFormProps {
 }
 
 export function ContactForm({
-  defaultService = "general",
+  defaultService = "other",
   formType = "CONTACT",
   compact = false,
 }: ContactFormProps) {
@@ -121,11 +121,10 @@ export function ContactForm({
         {...register("service")}
         error={errors.service?.message}
         options={[
-          { value: "general", label: "General Enquiry" },
-          { value: "guardianage", label: "Yacht Guardianage" },
-          { value: "project", label: "Project Management" },
+          { value: "project", label: "Project Work" },
+          { value: "guardianage", label: "Guardianage" },
+          { value: "other", label: "Other" },
           { value: "accommodation", label: "Accommodation" },
-          { value: "quote", label: "Request a Quote" },
         ]}
       />
 
