@@ -77,3 +77,27 @@ export function formConfirmationTemplate(
     </div>
   `;
 }
+
+export function bookingConfirmationTemplate(
+  guestName: string,
+  checkIn: string,
+  checkOut: string
+): string {
+  return `
+    <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; color: #0A2540;">
+      <div style="background: #0A2540; padding: 30px; text-align: center;">
+        <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Accommodation Booking</h1>
+      </div>
+      <div style="padding: 30px; background: #ffffff;">
+        <p>Dear ${guestName},</p>
+        <p>Your accommodation booking request has been received:</p>
+        <ul>
+          <li><strong>Check-in:</strong> ${checkIn}</li>
+          <li><strong>Check-out:</strong> ${checkOut}</li>
+        </ul>
+        <p>We will confirm availability shortly.</p>
+        <p>Regards,<br/><strong>${SITE.name}</strong></p>
+      </div>
+    </div>
+  `;
+}
