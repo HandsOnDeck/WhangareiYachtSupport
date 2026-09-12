@@ -6,7 +6,7 @@ Session decisions and setup for the public site and admin app. No secrets — us
 
 | App | Local path | GitHub | Live |
 |-----|------------|--------|------|
-| Public site | `C:\Users\sbpre\git\wys` | `HandsOnDeck/WhangareiYachtSupport` | `wys.co.nz` (Vercel) |
+| Public site | `C:\Users\sbpre\Projects\wys` | `HandsOnDeck/WhangareiYachtSupport` | `wys.co.nz` (Vercel) |
 | Admin | `C:\Users\sbpre\Projects\wys-admin` | `HandsOnDeck/wys-admin` | `admin.wys.co.nz` (also `wys-admin-iota.vercel.app`) |
 
 Both apps share the same Neon PostgreSQL database. Vercel team: `wysnz`.
@@ -43,6 +43,34 @@ Prisma SSL: prefer normalizing `sslmode=require` → `verify-full` in the client
 - Contact / booking writes go through `POST /api/bookings` (creates `CLIENT` + `BOOKING`).
 - Accommodation bookings do **not** create `JOB`s.
 - Bookings work landed on `feature/bookings` and merged to `main` (PR #2).
+
+### Image management
+
+**Decision:** self-host real photos under `public/images/` with `next/image` — not Unsplash. Unsplash was scaffolding only (broken links / not authentic). Next.js serves AVIF/WebP; Unsplash `remotePatterns` were removed from `next.config.ts`.
+
+**Why local files:** branding control, no external 404s, works on Vercel with no extra service, fine for ~20–40 marketing photos. Use Cloudinary / Vercel Blob / a CMS only if non-developers need to upload often without code.
+
+**Folder layout:**
+
+```
+public/images/
+  hero/                 → hero.jpg
+  marina/               → marina.jpg, coastal.jpg
+  guardianage/          → inspection.jpg
+  project-management/   → refit.jpg
+  accommodation/        → exterior.jpg
+  about/                → yacht.jpg (+ logo assets)
+  og/                   → og-image.jpg (1200×630 social preview)
+  gallery/{guardianage,projects,accommodation,marina}/
+```
+
+**Path definitions:** page/section images in `src/lib/constants.ts` (`IMAGES`); gallery in `src/lib/data.ts` (`GALLERY_IMAGES`); OG fallback in `src/lib/seo.ts` → `/images/og/og-image.jpg`.
+
+**Prep sizes:** heroes ~1920×1080 (~200–400 KB); sections ~1200×800; gallery ~800×600; OG 1200×630. JPG or WebP; compress with Squoosh (or similar) before adding. Always set good `alt` text.
+
+**Fill order:** (1) hero + accommodation, (2) gallery, (3) service pages, (4) OG image.
+
+**OG image:** preview card when the URL is shared on social/messaging — not shown on the site itself.
 
 ## Admin (`wys-admin`)
 
