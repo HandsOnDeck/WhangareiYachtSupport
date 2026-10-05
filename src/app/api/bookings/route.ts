@@ -3,24 +3,14 @@ import { z } from "zod";
 import { format } from "date-fns";
 import { prisma } from "@/lib/prisma";
 import { sendEmail, bookingConfirmationTemplate } from "@/lib/email";
+import { bookingSchema } from "@/lib/form-fields";
+import { allowPublicSubmission, clientAddress } from "@/lib/rate-limit";
+import { parseStayDate } from "@/lib/stay-overlap";
 import { SITE } from "@/lib/constants";
 import { STATUS } from "@/lib/enquiry";
 
-const schema = z
-  .object({
-    guestName: z.string().min(2),
-    guestEmail: z.string().email(),
-    guestPhone: z.string().optional(),
-    guestType: z.string(),
-    checkIn: z.string(),
-    checkOut: z.string(),
-    guests: z.coerce.number().min(1).max(4),
-    notes: z.string().optional(),
-    website: z.string().optional(),
-  })
-  .refine((data) => new Date(data.checkOut) > new Date(data.checkIn), {
-    message: "Check-out must be after check-in",
-  });
+const PLACEHOLDER_CUTOFF = new Date("2090-01-01T00:00:00.000Z");
+const UNAVAILABLE = "Those dates are not available. Please choose different dates.";
 
 function escapeHtml(value: string): string {
   return value
@@ -44,51 +34,59 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const data = schema.parse(body);
+    const data = bookingSchema.parse(body);
+
+    if (!allowPublicSubmission(clientAddress(request), data.guestEmail)) {
+      return NextResponse.json(
+        { error: "Please wait a few minutes and try again." },
+        { status: 429 }
+      );
+    }
 
     if (data.website) {
       return NextResponse.json({ success: true });
     }
 
-    const startDate = new Date(data.checkIn);
-    const endDate = new Date(data.checkOut);
+    const startDate = parseStayDate(data.checkIn);
+    const endDate = parseStayDate(data.checkOut);
 
-    const conflict = await prisma.booking.findFirst({
-      where: {
-        status: { in: [STATUS.PENDING, STATUS.ACTIVE] },
-        startDate: { lt: endDate },
-        endDate: { gt: startDate },
-      },
-      select: { clientId: true },
-    });
+    const client = await prisma.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(742019)`;
+      const conflict = await tx.booking.findFirst({
+        where: {
+          status: { in: [STATUS.PENDING, STATUS.ACTIVE] },
+          startDate: { lt: endDate },
+          endDate: { gt: startDate },
+          NOT: { startDate: { gte: PLACEHOLDER_CUTOFF } },
+        },
+        select: { clientId: true },
+      });
+      if (conflict) {
+        throw new Error("OVERLAP");
+      }
 
-    if (conflict) {
-      return NextResponse.json(
-        { error: "Those dates are not available. Please choose different dates." },
-        { status: 409 }
-      );
-    }
+      const created = await tx.client.create({
+        data: {
+          status: STATUS.PENDING,
+          name: truncate(data.guestName.trim(), 50),
+          email: truncate(data.guestEmail.trim(), 50),
+          phone: truncate((data.guestPhone?.trim() || "—").slice(0, 20), 20),
+          yachtName: null,
+          notes: `Accommodation booking (${data.guestType})`,
+        },
+      });
 
-    const client = await prisma.client.create({
-      data: {
-        status: STATUS.PENDING,
-        name: truncate(data.guestName.trim(), 50),
-        email: truncate(data.guestEmail.trim(), 50),
-        phone: truncate((data.guestPhone?.trim() || "—").slice(0, 20), 20),
-        yachtName: null,
-        notes: `Accommodation booking (${data.guestType})`,
-      },
-    });
-
-    const booking = await prisma.booking.create({
-      data: {
-        clientId: client.clientId,
-        startDate,
-        endDate,
-        status: STATUS.PENDING,
-        numGuests: data.guests,
-        notes: data.notes?.trim() || null,
-      },
+      await tx.booking.create({
+        data: {
+          clientId: created.clientId,
+          startDate,
+          endDate,
+          status: STATUS.PENDING,
+          numGuests: data.guests,
+          notes: data.notes?.trim().slice(0, 2000) || null,
+        },
+      });
+      return created;
     });
 
     const checkInFormatted = format(startDate, "d MMMM yyyy");
@@ -126,15 +124,13 @@ export async function POST(request: NextRequest) {
       ]);
     }
 
-    return NextResponse.json({
-      success: true,
-      clientId: booking.clientId,
-      startDate: booking.startDate.toISOString(),
-      endDate: booking.endDate.toISOString(),
-    });
+    return NextResponse.json({ success: true });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid booking data" }, { status: 400 });
+    }
+    if (error instanceof Error && error.message === "OVERLAP") {
+      return NextResponse.json({ error: UNAVAILABLE }, { status: 409 });
     }
     console.error("Booking error:", error);
     return NextResponse.json({ error: "Failed to create booking" }, { status: 500 });

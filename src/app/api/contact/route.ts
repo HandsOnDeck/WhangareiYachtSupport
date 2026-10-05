@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { sendEmail, formConfirmationTemplate } from "@/lib/email";
+import { contactSchema } from "@/lib/form-fields";
+import { allowPublicSubmission, clientAddress } from "@/lib/rate-limit";
 import {
   createClientAndBookingFromContact,
   createClientAndJobFromContact,
@@ -8,19 +10,6 @@ import {
   serviceLabel,
 } from "@/lib/enquiry";
 import { SITE } from "@/lib/constants";
-
-const schema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  phone: z.string().optional(),
-  yachtName: z.string().optional(),
-  service: z.string(),
-  message: z.string().min(10),
-  formType: z
-    .enum(["CONTACT", "QUOTE", "GUARDIANAGE", "PROJECT", "ACCOMMODATION"])
-    .optional(),
-  website: z.string().optional(),
-});
 
 function escapeHtml(value: string): string {
   return value
@@ -40,7 +29,16 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const data = schema.parse(body);
+    const data = contactSchema.parse(body);
+
+    if (
+      !allowPublicSubmission(clientAddress(request), data.email)
+    ) {
+      return NextResponse.json(
+        { error: "Please wait a few minutes and try again." },
+        { status: 429 }
+      );
+    }
 
     if (data.website) {
       return NextResponse.json({ success: true });
@@ -92,19 +90,7 @@ export async function POST(request: NextRequest) {
       ]);
     }
 
-    if (accommodation && "booking" in result) {
-      return NextResponse.json({
-        success: true,
-        clientId: result.client.clientId,
-        booking: true,
-      });
-    }
-
-    return NextResponse.json({
-      success: true,
-      clientId: result.client.clientId,
-      jobId: "job" in result ? result.job.jobId : undefined,
-    });
+    return NextResponse.json({ success: true });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid form data" }, { status: 400 });

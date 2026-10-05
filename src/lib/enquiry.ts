@@ -112,7 +112,7 @@ export async function createClientAndBookingFromContact(input: ContactEnquiryInp
       numGuests: null,
       notes: truncate(
         `Dates TBD. ${formLabel}: ${label}\n\n${input.message.trim()}`,
-        4000
+        2000
       ),
     },
   });
@@ -146,7 +146,7 @@ export async function createClientAndJobFromContact(input: ContactEnquiryInput) 
       jobType,
       status: STATUS.PENDING,
       descr: truncate(`${formLabel}: ${label}`, 50),
-      notes: input.message.trim(),
+      notes: truncate(input.message.trim(), 2000),
     },
   });
 

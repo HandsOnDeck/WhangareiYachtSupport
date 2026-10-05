@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,17 +10,21 @@ import { Textarea } from "@/components/ui/Textarea";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { Calendar, CheckCircle } from "lucide-react";
+import { FIELD_MAX } from "@/lib/form-fields";
+import { staysOverlap } from "@/lib/stay-overlap";
+
+const UNAVAILABLE = "Those dates are not available. Please choose different dates.";
 
 const schema = z
   .object({
-    guestName: z.string().min(2, "Name is required"),
-    guestEmail: z.string().email("Valid email required"),
-    guestPhone: z.string().optional(),
-    guestType: z.string().min(1, "Please select guest type"),
-    checkIn: z.string().min(1, "Check-in date required"),
-    checkOut: z.string().min(1, "Check-out date required"),
+    guestName: z.string().min(2, "Name is required").max(FIELD_MAX.name, "Name is too long"),
+    guestEmail: z.string().email("Valid email required").max(FIELD_MAX.email, "Email is too long"),
+    guestPhone: z.string().max(FIELD_MAX.phone, "Phone is too long").optional(),
+    guestType: z.string().min(1, "Please select guest type").max(FIELD_MAX.guestType),
+    checkIn: z.string().min(1, "Check-in date required").max(FIELD_MAX.date),
+    checkOut: z.string().min(1, "Check-out date required").max(FIELD_MAX.date),
     guests: z.number().min(1, "At least 1 guest").max(4, "Maximum 4 guests"),
-    notes: z.string().optional(),
+    notes: z.string().max(FIELD_MAX.notes, "Notes are too long").optional(),
     website: z.string().max(0).optional(),
   })
   .refine((data) => new Date(data.checkOut) > new Date(data.checkIn), {
@@ -33,18 +37,45 @@ type FormData = z.infer<typeof schema>;
 export function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [stays, setStays] = useState<{ checkIn: string; checkOut: string }[]>([]);
 
   const {
     register,
     handleSubmit,
+    setError: setFieldError,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { guests: 2, guestType: "yacht-owner" },
   });
 
+  useEffect(() => {
+    let cancelled = false;
+    async function loadStays() {
+      try {
+        const res = await fetch("/api/bookings/availability");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled) setStays(data.bookings || []);
+      } catch {
+        // The server still rejects an overlapping stay.
+      }
+    }
+    void loadStays();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   async function onSubmit(data: FormData) {
     setError("");
+    const taken = stays.some((stay) =>
+      staysOverlap(data.checkIn, data.checkOut, stay.checkIn, stay.checkOut),
+    );
+    if (taken) {
+      setFieldError("checkOut", { message: UNAVAILABLE });
+      return;
+    }
 
     try {
       const res = await fetch("/api/bookings", {
@@ -94,6 +125,7 @@ export function BookingForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <Input
           label="Full Name"
+          maxLength={FIELD_MAX.name}
           {...register("guestName")}
           error={errors.guestName?.message}
           required
@@ -101,6 +133,7 @@ export function BookingForm() {
         <Input
           label="Email"
           type="email"
+          maxLength={FIELD_MAX.email}
           {...register("guestEmail")}
           error={errors.guestEmail?.message}
           required
@@ -108,6 +141,7 @@ export function BookingForm() {
         <Input
           label="Phone / WhatsApp"
           type="tel"
+          maxLength={FIELD_MAX.phone}
           {...register("guestPhone")}
           error={errors.guestPhone?.message}
         />
@@ -151,6 +185,7 @@ export function BookingForm() {
       <Textarea
         label="Special Requests"
         rows={3}
+        maxLength={FIELD_MAX.notes}
         {...register("notes")}
         error={errors.notes?.message}
       />
